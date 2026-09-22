@@ -1,0 +1,38 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: lista-tarefas-api
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:postgres-tasklist-db}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:sacadura10}
+    driver-class-name: org.postgresql.Driver
+
+
+  jpa:
+    hibernate:
+      # O schema é gerenciado pelo Liquibase (repositório separado), nunca pelo Hibernate.
+      ddl-auto: none
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: false
+
+app:
+  jwt:
+    # Em produção, defina via variável de ambiente JWT_SECRET (mínimo 256 bits / 32 chars).
+    secret: ${JWT_SECRET:troque-este-segredo-em-producao-min-32-caracteres}
+    expiration-minutes: ${JWT_EXPIRATION_MINUTES:1440}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
