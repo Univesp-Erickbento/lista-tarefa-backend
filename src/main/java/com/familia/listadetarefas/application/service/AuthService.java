@@ -7,13 +7,8 @@ import com.familia.listadetarefas.domain.port.out.PasswordEncoderPort;
 import com.familia.listadetarefas.domain.port.out.TokenPort;
 import com.familia.listadetarefas.domain.port.out.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Repare que esta classe NÃO importa nada de org.springframework.security.
- * A verificação de senha e a emissão do token acontecem via portas
- * (PasswordEncoderPort, TokenPort) - o Spring Security só aparece lá na
- * ponta, dentro dos adaptadores que implementam essas portas.
- */
 @Service
 public class AuthService implements AuthUseCase {
 
@@ -28,6 +23,7 @@ public class AuthService implements AuthUseCase {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public LoginResult login(String email, String senha) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CredenciaisInvalidasException("E-mail ou senha inválidos"));

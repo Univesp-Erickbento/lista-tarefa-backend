@@ -1,0 +1,19 @@
+# ============================================================================
+# PERFIL DEV - Postgres local (o mesmo do docker-compose.yml do repositório
+# banco-dados). Tem defaults convenientes de propósito, pra rodar sem
+# precisar exportar nada na maioria dos casos - só ative o perfil.
+# ============================================================================
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5440}/${DB_NAME:postgres-tasklist-db}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:sacadura10}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true # útil ver o SQL gerado no console durante o desenvolvimento
+
+logging:
+  level:
+    com.familia.listadetarefas: DEBUG

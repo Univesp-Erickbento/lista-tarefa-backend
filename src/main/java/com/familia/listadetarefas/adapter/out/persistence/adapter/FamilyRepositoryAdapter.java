@@ -1,5 +1,6 @@
 package com.familia.listadetarefas.adapter.out.persistence.adapter;
 
+import com.familia.listadetarefas.adapter.out.persistence.entity.FamilyEntity;
 import com.familia.listadetarefas.adapter.out.persistence.mapper.PersistenceMapper;
 import com.familia.listadetarefas.adapter.out.persistence.repository.FamilyJpaRepository;
 import com.familia.listadetarefas.domain.model.Family;
@@ -21,5 +22,11 @@ public class FamilyRepositoryAdapter implements FamilyRepository {
     @Override
     public Optional<Family> findById(UUID id) {
         return jpaRepository.findById(id).map(PersistenceMapper::toDomain);
+    }
+
+    @Override
+    public Family save(Family family) {
+        FamilyEntity entity = PersistenceMapper.toEntity(family);
+        return PersistenceMapper.toDomain(jpaRepository.save(entity));
     }
 }

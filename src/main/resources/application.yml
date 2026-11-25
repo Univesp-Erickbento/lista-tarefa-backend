@@ -1,16 +1,14 @@
-server:
-  port: ${SERVER_PORT:8080}
-
 spring:
   application:
     name: lista-tarefas-api
+  profiles:
+    active: dev
 
-  datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:postgres-tasklist-db}
-    username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:sacadura10}
-    driver-class-name: org.postgresql.Driver
-
+  # Ativa o perfil via variável de ambiente SPRING_PROFILES_ACTIVE
+  # (dev | homolog | prod). Sem isso definido, o Spring roda sem
+  # nenhum perfil ativo e vai reclamar que não tem datasource configurado
+  # - é proposital: não existe um "defSault" que aponte pra produção
+  # sem querer.
 
   jpa:
     hibernate:
@@ -22,11 +20,35 @@ spring:
         format_sql: true
     show-sql: false
 
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: ${MAIL_SMTP_AUTH:false}
+          starttls:
+            enable: ${MAIL_SMTP_STARTTLS:false}
+
+server:
+  port: ${SERVER_PORT:8080}
+
 app:
   jwt:
-    # Em produção, defina via variável de ambiente JWT_SECRET (mínimo 256 bits / 32 chars).
+    # Em homolog/prod, defina via variável de ambiente JWT_SECRET
+    # (mínimo 256 bits / 32 caracteres) - NUNCA reaproveite o default.
     secret: ${JWT_SECRET:troque-este-segredo-em-producao-min-32-caracteres}
     expiration-minutes: ${JWT_EXPIRATION_MINUTES:1440}
+
+  mail:
+    from: ${MAIL_FROM:no-reply@listadetarefas.app}
+
+  frontend-url: ${FRONTEND_URL:http://localhost:5173}
+
+  password-reset:
+    expiration-minutes: ${PASSWORD_RESET_EXPIRATION_MINUTES:30}
 
 management:
   endpoints:

@@ -6,6 +6,7 @@ import com.familia.listadetarefas.domain.port.in.RankingUseCase;
 import com.familia.listadetarefas.domain.port.out.TaskRepository;
 import com.familia.listadetarefas.domain.port.out.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -29,6 +30,7 @@ public class RankingService implements RankingUseCase {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Entrada> ranking(User quemEstaAgindo, String periodo) {
         OffsetDateTime desde = "mes".equalsIgnoreCase(periodo)
                 ? OffsetDateTime.now().minus(30, ChronoUnit.DAYS)

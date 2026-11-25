@@ -1,0 +1,20 @@
+# ============================================================================
+# PERFIL HOMOLOG - Postgres de homologação (EC2 própria, banco separado
+# do de produção). SEM defaults de propósito: se alguém esquecer de
+# definir uma dessas variáveis, a aplicação falha ao subir em vez de
+# silenciosamente usar um valor de dev/produção errado.
+# ============================================================================
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT:5432}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: false
+
+logging:
+  level:
+    com.familia.listadetarefas: INFO

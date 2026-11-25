@@ -31,7 +31,14 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login", "/actuator/health", "/actuator/prometheus").permitAll()
+                        .requestMatchers(
+                                "/auth/login",
+                                "/auth/cadastro",
+                                "/auth/esqueci-senha",
+                                "/auth/redefinir-senha",
+                                "/actuator/health",
+                                "/actuator/prometheus"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

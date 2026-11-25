@@ -3,8 +3,10 @@ package com.familia.listadetarefas.adapter.out.persistence.entity;
 import com.familia.listadetarefas.domain.model.enums.AvaliacaoTipo;
 import com.familia.listadetarefas.domain.model.enums.TaskStatus;
 import jakarta.persistence.*;
-import org.hibernate.annotations.ColumnTransformer;
+import org.hibernate.annotations.JdbcType;
 import org.hibernate.annotations.UuidGenerator;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -37,16 +39,16 @@ public class TaskEntity {
     private OffsetDateTime horario;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(nullable = false, columnDefinition = "task_status")
-    @ColumnTransformer(write = "?::task_status")
     private TaskStatus status = TaskStatus.PENDENTE;
 
     @Column(nullable = false)
     private Integer pontos;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(columnDefinition = "avaliacao_tipo")
-    @ColumnTransformer(write = "?::avaliacao_tipo")
     private AvaliacaoTipo avaliacao;
 
     @Column(name = "pontos_ganhos", precision = 6, scale = 2)

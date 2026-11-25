@@ -10,6 +10,7 @@ import com.familia.listadetarefas.domain.port.out.TaskTemplateRepository;
 import com.familia.listadetarefas.domain.port.out.TaskTemplateUserStatsRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,11 +28,13 @@ public class TaskTemplateService implements TaskTemplateUseCase {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<TaskTemplate> listarCatalogo(User quemEstaAgindo) {
         return taskTemplateRepository.findByFamilyIdAndAtivoTrue(quemEstaAgindo.getFamily().getId());
     }
 
     @Override
+    @Transactional
     public TaskTemplate criar(User quemEstaAgindo, String tituloPadrao, String descricaoPadrao,
                                String categoria, Integer pontosPadrao) {
         TaskTemplate template = new TaskTemplate();
@@ -50,6 +53,7 @@ public class TaskTemplateService implements TaskTemplateUseCase {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<TaskTemplateUserStats> estatisticasPorPessoa(UUID taskTemplateId) {
         if (!taskTemplateRepository.existsById(taskTemplateId)) {
             throw new ResourceNotFoundException("Tarefa do catálogo não encontrada");

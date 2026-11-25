@@ -12,4 +12,5 @@ import java.util.UUID;
  */
 public interface FamilyRepository {
     Optional<Family> findById(UUID id);
+    Family save(Family family);
 }

@@ -41,6 +41,7 @@ public class TaskService implements TaskUseCase {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Task> listar(User quemEstaAgindo, LocalDate data, TaskStatus status, UUID assignedToId) {
         OffsetDateTime inicio = data != null ? data.atStartOfDay().atOffset(ZoneOffset.UTC) : null;
         OffsetDateTime fim = data != null ? data.plusDays(1).atStartOfDay().atOffset(ZoneOffset.UTC) : null;
@@ -118,6 +119,7 @@ public class TaskService implements TaskUseCase {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<TaskHistory> historico(UUID taskId) {
         return taskHistoryRepository.findByTaskId(taskId);
     }

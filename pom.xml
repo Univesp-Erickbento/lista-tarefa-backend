@@ -49,6 +49,12 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Envio de e-mail (definir/redefinir senha) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>

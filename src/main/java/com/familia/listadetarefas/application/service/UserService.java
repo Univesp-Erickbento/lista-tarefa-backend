@@ -8,6 +8,7 @@ import com.familia.listadetarefas.domain.port.out.GrauParentescoRepository;
 import com.familia.listadetarefas.domain.port.out.PasswordEncoderPort;
 import com.familia.listadetarefas.domain.port.out.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,11 +27,13 @@ public class UserService implements UserUseCase {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> listarFamilia(User quemEstaAgindo) {
         return userRepository.findByFamilyId(quemEstaAgindo.getFamily().getId());
     }
 
     @Override
+    @Transactional
     public User adicionarMembro(User quemEstaAgindo, String nome, String email, String senha,
                                  Short grauParentescoId, boolean podeGerenciarTarefas) {
         GrauParentesco grau = grauParentescoRepository.findById(grauParentescoId)
