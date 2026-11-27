@@ -2,6 +2,7 @@ package com.familia.listadetarefas.domain.port.out;
 
 import com.familia.listadetarefas.domain.model.Family;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -13,4 +14,7 @@ import java.util.UUID;
 public interface FamilyRepository {
     Optional<Family> findById(UUID id);
     Family save(Family family);
+    List<Family> findAll();
+    List<Family> findByParentFamilyId(UUID parentFamilyId);
+    Optional<Family> findByCodigoConvite(String codigoConvite);
 }

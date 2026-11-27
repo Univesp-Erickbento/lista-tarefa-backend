@@ -7,6 +7,7 @@ import com.familia.listadetarefas.domain.model.Family;
 import com.familia.listadetarefas.domain.port.out.FamilyRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,5 +29,23 @@ public class FamilyRepositoryAdapter implements FamilyRepository {
     public Family save(Family family) {
         FamilyEntity entity = PersistenceMapper.toEntity(family);
         return PersistenceMapper.toDomain(jpaRepository.save(entity));
+    }
+
+    public List<Family> findAll() {
+        return jpaRepository.findAll().stream()
+                .map(PersistenceMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Family> findByParentFamilyId(UUID parentFamilyId) {
+        return jpaRepository.findByParentFamilyId(parentFamilyId).stream()
+                .map(PersistenceMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public Optional<Family> findByCodigoConvite(String codigoConvite) {
+        return jpaRepository.findByCodigoConvite(codigoConvite).map(PersistenceMapper::toDomain);
     }
 }

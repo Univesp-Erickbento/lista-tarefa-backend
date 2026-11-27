@@ -18,13 +18,22 @@ public final class PersistenceMapper {
 
     public static Family toDomain(FamilyEntity entity) {
         if (entity == null) return null;
-        return new Family(entity.getId(), entity.getNome(), entity.getCreatedAt());
+        Family family = new Family(entity.getId(), entity.getNome(), entity.getCreatedAt());
+        family.setEndereco(entity.getEndereco());
+        family.setCodigoConvite(entity.getCodigoConvite());
+        family.setTipo(entity.getTipo());
+        family.setParentFamilyId(entity.getParentFamilyId());
+        return family;
     }
 
     public static FamilyEntity toEntity(Family domain) {
         FamilyEntity entity = new FamilyEntity();
         entity.setId(domain.getId());
         entity.setNome(domain.getNome());
+        entity.setEndereco(domain.getEndereco());
+        entity.setCodigoConvite(domain.getCodigoConvite());
+        entity.setTipo(domain.getTipo());
+        entity.setParentFamilyId(domain.getParentFamilyId());
         return entity;
     }
 

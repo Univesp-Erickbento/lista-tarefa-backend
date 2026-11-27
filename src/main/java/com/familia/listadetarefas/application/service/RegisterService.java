@@ -45,13 +45,16 @@ public class RegisterService implements RegisterUseCase {
 
     @Override
     @Transactional
-    public AuthUseCase.LoginResult registrar(String nome, String email, String senha) {
+    public AuthUseCase.LoginResult registrar(String nome, String email, String senha, String nomeFamilia, String endereco) {
         if (userRepository.findByEmail(email).isPresent()) {
             throw new BusinessException("Já existe uma conta com esse e-mail");
         }
 
         Family family = new Family();
-        family.setNome(nome); // pode virar editável depois; por ora, nasce com o nome do fundador
+        family.setNome(nomeFamilia != null && !nomeFamilia.isBlank() ? nomeFamilia.trim() : nome + " — Família");
+        family.setTipo("PRINCIPAL");
+        family.setCodigoConvite("FAM-" + java.util.UUID.randomUUID().toString().substring(0, 8).toUpperCase());
+        family.setEndereco(endereco);
         Family familySalva = familyRepository.save(family);
 
         GrauParentesco grauFundador = grauParentescoRepository.findAllOrdenadoPorCategoria().stream()

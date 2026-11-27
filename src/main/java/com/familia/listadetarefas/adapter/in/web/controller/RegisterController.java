@@ -25,7 +25,7 @@ public class RegisterController {
     @PostMapping("/cadastro")
     @ResponseStatus(HttpStatus.CREATED)
     public LoginResponse cadastrar(@Valid @RequestBody RegisterRequest request) {
-        var resultado = registerUseCase.registrar(request.nome(), request.email(), request.senha());
+        var resultado = registerUseCase.registrar(request.nome(), request.email(), request.senha(), request.nomeFamilia(), request.endereco());
         // Já retorna token, igual ao login - cadastro entra direto, sem
         // precisar logar de novo em seguida (decisão tomada: sem
         // confirmação de e-mail no MVP).

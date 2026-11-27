@@ -26,6 +26,18 @@ public class FamilyEntity {
     @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt = OffsetDateTime.now();
 
+    @Column(length = 255)
+    private String endereco;
+
+    @Column(name = "codigo_convite", nullable = false, length = 20, unique = true)
+    private String codigoConvite;
+
+    @Column(nullable = false, length = 20)
+    private String tipo = "PRINCIPAL";
+
+    @Column(name = "parent_family_id")
+    private UUID parentFamilyId;
+
     public UUID getId() {
         return id;
     }
@@ -48,5 +60,37 @@ public class FamilyEntity {
 
     public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getCodigoConvite() {
+        return codigoConvite;
+    }
+
+    public void setCodigoConvite(String codigoConvite) {
+        this.codigoConvite = codigoConvite;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public UUID getParentFamilyId() {
+        return parentFamilyId;
+    }
+
+    public void setParentFamilyId(UUID parentFamilyId) {
+        this.parentFamilyId = parentFamilyId;
     }
 }

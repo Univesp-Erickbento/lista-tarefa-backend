@@ -7,5 +7,5 @@ package com.familia.listadetarefas.domain.port.in;
  * logado antes, porque é assim que a primeira conta de cada família nasce.
  */
 public interface RegisterUseCase {
-    AuthUseCase.LoginResult registrar(String nome, String email, String senha);
+    AuthUseCase.LoginResult registrar(String nome, String email, String senha, String nomeFamilia, String endereco);
 }
